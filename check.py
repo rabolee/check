@@ -99,7 +99,8 @@ class WindowClass(QMainWindow, checkprogram) :
         self.check_widget.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeToContents)
 
     def calendarlist_teacher(self):
-        self.cursor.execute("SELECT * FROM check.message_date;")
+
+        self.cursor.execute("SELECT distinct * FROM check.message_date")
         result = self.cursor.fetchall()
         self.date_widget.setRowCount(len(result))
         self.date_widget.setColumnCount(len(result[0]))
@@ -107,7 +108,6 @@ class WindowClass(QMainWindow, checkprogram) :
             for j in range(len(result[i])):
                 self.date_widget.setItem(i, j, QTableWidgetItem(str(result[i][j])))
         self.date_widget.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeToContents)
-
 
 
 
@@ -140,8 +140,6 @@ class WindowClass(QMainWindow, checkprogram) :
         watch = QTime.currentTime()
         time = watch.toString(Qt.DefaultLocaleLongDate)
         print(time)
-        # self.cursor.execute("SELECT now()")
-        # time = self.cursor.fetchall()[0][0]
         self.entrance_line.setText(f'{time}')
         self.cursor.execute(f"update check_list set 입실시간 = '{time}' where 이름 = '{self.login[1]}'")
         self.db.commit()
