@@ -35,7 +35,11 @@ class WindowClass(QMainWindow, checkprogram) :
         self.manager_end_button_3.clicked.connect(self.start)
         self.schedule_check_button.clicked.connect(self.schedule_view_student)
         self.calendarWidget.selectionChanged.connect(self.schedule_f)
-        self.schedule_add_button.clicked.connect(self.calendarlist)
+        self.schedule_add_button.clicked.connect(self.calendarlist_add)
+        self.schedule_update_button.clicked.connect(self.calendarlist_update)
+        self.schedule_del_button.clicked.connect(self.calendarlist_del)
+        self.schedule_button.clicked.connect(self.calendarlist_teacher)
+
 
 # 화면전환용 ----------------------------------------------
 
@@ -92,6 +96,17 @@ class WindowClass(QMainWindow, checkprogram) :
                 self.check_widget.setItem(i, j, QTableWidgetItem(str(result[i][j])))
         self.check_widget.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeToContents)
 
+    def calendarlist_teacher(self):
+        self.cursor.execute("SELECT * FROM check.message_date;")
+        result = self.cursor.fetchall()
+        self.date_widget.setRowCount(len(result))
+        self.date_widget.setColumnCount(len(result[0]))
+        for i in range(len(result)):
+            for j in range(len(result[i])):
+                self.date_widget.setItem(i, j, QTableWidgetItem(str(result[i][j])))
+        self.date_widget.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeToContents)
+
+
 
 
 
@@ -115,6 +130,7 @@ class WindowClass(QMainWindow, checkprogram) :
         self.leave_line.clear()
         self.outing_line.clear()
         self.comeback_line.clear()
+        self.date_list.clear()
 
 
     def entrance_f(self):
@@ -153,13 +169,17 @@ class WindowClass(QMainWindow, checkprogram) :
         now = self.calendarWidget.selectedDate()
         self.date_line.setText(f"{now.toString(Qt.DefaultLocaleLongDate)}")
         # print(f"{now},{self.login[1]}")
-        self.cursor.execute(f"insert into message_date (날짜,이름) values ('{now.toString(Qt.DefaultLocaleLongDate)}','{self.login[1]}')")
         calendar = self.date_detail.text()
         print(calendar)
 
-    def calendarlist(self):
 
-        self.cursor.execute("SELECT * FROM check.message_date;")
+    def calendarlist_add(self):
+        now = self.calendarWidget.selectedDate()
+        self.date_line.setText(f"{now.toString(Qt.DefaultLocaleLongDate)}")
+        self.cursor.execute(f"insert into check.message_date (날짜,이름,메세지) values ('{now.toString(Qt.DefaultLocaleLongDate)}','{self.login[1]}','{self.date_detail.text()}')")
+        self.db.commit()
+
+        self.cursor.execute(f"SELECT * FROM check.message_date WHERE 이름 = '{self.login[1]}'")
         result = self.cursor.fetchall()
         self.date_list.setRowCount(len(result))
         self.date_list.setColumnCount(len(result[0]))
@@ -167,6 +187,37 @@ class WindowClass(QMainWindow, checkprogram) :
             for j in range(len(result[i])):
                 self.date_list.setItem(i, j, QTableWidgetItem(str(result[i][j])))
         self.date_list.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeToContents)
+
+    def calendarlist_del(self):
+        now = self.calendarWidget.selectedDate()
+        self.date_line.setText(f"{now.toString(Qt.DefaultLocaleLongDate)}")
+        self.cursor.execute(f"insert into check.message_date (날짜,이름,메세지) values ('{now.toString(Qt.DefaultLocaleLongDate)}','{self.login[1]}','{self.date_detail.text()}')")
+        self.db.commit()
+
+        self.cursor.execute(f"SELECT * FROM check.message_date WHERE 이름 = '{self.login[1]}'")
+        result = self.cursor.fetchall()
+        self.date_list.setRowCount(len(result))
+        self.date_list.setColumnCount(len(result[0]))
+        for i in range(len(result)):
+            for j in range(len(result[i])):
+                self.date_list.setItem(i, j, QTableWidgetItem(str(result[i][j])))
+        self.date_list.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeToContents)
+
+    def calendarlist_update(self):
+        now = self.calendarWidget.selectedDate()
+        self.date_line.setText(f"{now.toString(Qt.DefaultLocaleLongDate)}")
+        self.cursor.execute(f"update check.message_date set 날짜 = '{}' where 날짜 = '{}';")
+        self.db.commit()
+
+        self.cursor.execute(f"SELECT * FROM check.message_date WHERE 이름 = '{self.login[1]}'")
+        result = self.cursor.fetchall()
+        self.date_list.setRowCount(len(result))
+        self.date_list.setColumnCount(len(result[0]))
+        for i in range(len(result)):
+            for j in range(len(result[i])):
+                self.date_list.setItem(i, j, QTableWidgetItem(str(result[i][j])))
+        self.date_list.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeToContents)
+
 
 
 # 수강평 -----------------------------------------------
