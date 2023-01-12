@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Form</class>
- <widget class="QWidget" name="Form">
+ <class>textlist</class>
+ <widget class="QWidget" name="textlist">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>465</width>
-    <height>761</height>
+    <width>456</width>
+    <height>759</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,7 +19,7 @@
      <x>10</x>
      <y>10</y>
      <width>441</width>
-     <height>741</height>
+     <height>721</height>
     </rect>
    </property>
    <property name="font">
@@ -28,7 +28,7 @@
     </font>
    </property>
    <property name="currentIndex">
-    <number>5</number>
+    <number>6</number>
    </property>
    <widget class="QWidget" name="page_6">
     <widget class="QPushButton" name="logout_button">
@@ -167,7 +167,7 @@ border-radius: 10px;
 </string>
      </property>
      <property name="text">
-      <string> </string>
+      <string/>
      </property>
     </widget>
     <widget class="QLabel" name="outing_line">
@@ -929,7 +929,7 @@ border-radius: 10px;
        <x>-10</x>
        <y>-60</y>
        <width>521</width>
-       <height>791</height>
+       <height>781</height>
       </rect>
      </property>
      <property name="text">
@@ -1022,24 +1022,11 @@ border-radius: 10px;
 </string>
      </property>
     </widget>
-    <widget class="QTableWidget" name="tableWidget_message">
-     <property name="geometry">
-      <rect>
-       <x>30</x>
-       <y>410</y>
-       <width>391</width>
-       <height>192</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true"/>
-     </property>
-    </widget>
     <widget class="QPushButton" name="lookup_message">
      <property name="geometry">
       <rect>
        <x>30</x>
-       <y>610</y>
+       <y>640</y>
        <width>391</width>
        <height>41</height>
       </rect>
@@ -1056,7 +1043,7 @@ border-radius: 10px;
 color:white;</string>
      </property>
      <property name="text">
-      <string>조회하기</string>
+      <string>보낸메세지함</string>
      </property>
     </widget>
     <widget class="QPushButton" name="main_button_2">
@@ -1078,12 +1065,22 @@ color:white;</string>
       <string>메인화면</string>
      </property>
     </widget>
+    <widget class="QTableWidget" name="tableWidget_message">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>400</y>
+       <width>391</width>
+       <height>231</height>
+      </rect>
+     </property>
+    </widget>
    </widget>
    <widget class="QWidget" name="page_4">
     <widget class="QLabel" name="label_5">
      <property name="geometry">
       <rect>
-       <x>160</x>
+       <x>150</x>
        <y>50</y>
        <width>141</width>
        <height>20</height>
@@ -1096,15 +1093,21 @@ color:white;</string>
     <widget class="QComboBox" name="comboBox">
      <property name="geometry">
       <rect>
-       <x>130</x>
-       <y>100</y>
-       <width>201</width>
+       <x>40</x>
+       <y>80</y>
+       <width>101</width>
        <height>31</height>
       </rect>
      </property>
+     <property name="styleSheet">
+      <string notr="true">background-color:rgb(52,101,164);
+border-style: solid;
+border-radius: 10px;
+color:white;</string>
+     </property>
      <item>
       <property name="text">
-       <string>선택</string>
+       <string>전체보기</string>
       </property>
      </item>
      <item>
@@ -1121,8 +1124,8 @@ color:white;</string>
     <widget class="QLineEdit" name="lineEdit_5">
      <property name="geometry">
       <rect>
-       <x>130</x>
-       <y>150</y>
+       <x>140</x>
+       <y>80</y>
        <width>201</width>
        <height>31</height>
       </rect>
@@ -1130,16 +1133,16 @@ color:white;</string>
      <property name="styleSheet">
       <string notr="true">
 border-style: solid;
-border-radius: 10px;
+
 </string>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton_8">
+    <widget class="QPushButton" name="find_button">
      <property name="geometry">
       <rect>
-       <x>130</x>
-       <y>200</y>
-       <width>201</width>
+       <x>330</x>
+       <y>80</y>
+       <width>71</width>
        <height>31</height>
       </rect>
      </property>
@@ -1150,14 +1153,14 @@ border-radius: 10px;
 color:white;</string>
      </property>
      <property name="text">
-      <string>검색</string>
+      <string>  검색</string>
      </property>
     </widget>
     <widget class="QLabel" name="label_6">
      <property name="geometry">
       <rect>
-       <x>40</x>
-       <y>290</y>
+       <x>10</x>
+       <y>130</y>
        <width>56</width>
        <height>12</height>
       </rect>
@@ -1166,40 +1169,11 @@ color:white;</string>
       <string>훈련정보</string>
      </property>
     </widget>
-    <widget class="QTextBrowser" name="textBrowser_2">
-     <property name="geometry">
-      <rect>
-       <x>40</x>
-       <y>310</y>
-       <width>371</width>
-       <height>111</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">background-color:rgb(52,101,164);
-border-style: solid;
-border-radius: 10px;
-color:white;</string>
-     </property>
-     <property name="html">
-      <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Gulim'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;훈련기관 | 대한상공회의소 광주인력개발원&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;훈련과정 | 데이터기반 AI SW 개발자 양성 / 2회&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;훈련구분 | 통합심사과정훈련&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;훈련기간 | 2022.10.25 ~ 2023.05.24&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-     </property>
-    </widget>
     <widget class="QLabel" name="label_7">
      <property name="geometry">
       <rect>
-       <x>40</x>
-       <y>440</y>
+       <x>10</x>
+       <y>390</y>
        <width>56</width>
        <height>12</height>
       </rect>
@@ -1208,25 +1182,12 @@ p, li { white-space: pre-wrap; }
       <string>수강후기</string>
      </property>
     </widget>
-    <widget class="QTextEdit" name="textEdit">
+    <widget class="QPushButton" name="review_add_button">
      <property name="geometry">
       <rect>
-       <x>40</x>
-       <y>460</y>
-       <width>371</width>
-       <height>151</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true"/>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="pushButton_9">
-     <property name="geometry">
-      <rect>
-       <x>44</x>
-       <y>620</y>
-       <width>371</width>
+       <x>22</x>
+       <y>450</y>
+       <width>391</width>
        <height>31</height>
       </rect>
      </property>
@@ -1259,6 +1220,174 @@ color:white;</string>
       <string>메인화면</string>
      </property>
     </widget>
+    <widget class="QStackedWidget" name="stackedWidget_5">
+     <property name="geometry">
+      <rect>
+       <x>-20</x>
+       <y>150</y>
+       <width>461</width>
+       <height>231</height>
+      </rect>
+     </property>
+     <property name="currentIndex">
+      <number>0</number>
+     </property>
+     <widget class="QWidget" name="page_15">
+      <widget class="QTextBrowser" name="textBrowser_2">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>20</y>
+         <width>351</width>
+         <height>131</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color:rgb(52,101,164);
+border-style: solid;
+border-radius: 10px;
+color:white;</string>
+       </property>
+       <property name="html">
+        <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Gulim'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+      </widget>
+      <widget class="QTableWidget" name="tableWidget">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>20</y>
+         <width>431</width>
+         <height>171</height>
+        </rect>
+       </property>
+       <property name="selectionBehavior">
+        <enum>QAbstractItemView::SelectRows</enum>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="classview_button">
+       <property name="geometry">
+        <rect>
+         <x>400</x>
+         <y>200</y>
+         <width>51</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color:rgb(52,101,164);
+border-style: solid;
+border-radius: 10px;
+color:white;</string>
+       </property>
+       <property name="text">
+        <string>선택</string>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="page_17">
+      <widget class="QTextBrowser" name="textBrowser_9">
+       <property name="geometry">
+        <rect>
+         <x>70</x>
+         <y>40</y>
+         <width>351</width>
+         <height>141</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color:rgb(52,101,164);
+border-style: solid;
+border-radius: 10px;
+color:white;</string>
+       </property>
+       <property name="html">
+        <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Gulim'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+      </widget>
+      <widget class="QTextEdit" name="test">
+       <property name="geometry">
+        <rect>
+         <x>80</x>
+         <y>50</y>
+         <width>331</width>
+         <height>121</height>
+        </rect>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="page_16">
+      <widget class="QTextBrowser" name="textBrowser_8">
+       <property name="geometry">
+        <rect>
+         <x>60</x>
+         <y>40</y>
+         <width>361</width>
+         <height>141</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color:rgb(52,101,164);
+border-style: solid;
+border-radius: 10px;
+color:white;</string>
+       </property>
+       <property name="html">
+        <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Gulim'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;훈련기관 | 대한상공회의소 광주인력개발원&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;훈련과정 | 데이터기반 AI SW 개발자 양성 / 2회&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;훈련구분 | 통합심사과정훈련&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;훈련기간 | 2022.10.25 ~ 2023.05.24&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+      </widget>
+     </widget>
+    </widget>
+    <widget class="QLineEdit" name="lineEdit">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>410</y>
+       <width>391</width>
+       <height>31</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QListWidget" name="listWidget">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>490</y>
+       <width>371</width>
+       <height>231</height>
+      </rect>
+     </property>
+    </widget>
+    <zorder>label_5</zorder>
+    <zorder>comboBox</zorder>
+    <zorder>find_button</zorder>
+    <zorder>label_6</zorder>
+    <zorder>review_add_button</zorder>
+    <zorder>main2_button</zorder>
+    <zorder>stackedWidget_5</zorder>
+    <zorder>lineEdit_5</zorder>
+    <zorder>lineEdit</zorder>
+    <zorder>label_7</zorder>
+    <zorder>listWidget</zorder>
    </widget>
    <widget class="QWidget" name="page_2">
     <widget class="QCalendarWidget" name="calendarWidget">
@@ -1338,7 +1467,7 @@ color:white;</string>
       <string>메인화면</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="schedule_update_button">
+    <widget class="QPushButton" name="schedule_del_button">
      <property name="geometry">
       <rect>
        <x>360</x>
@@ -1354,45 +1483,7 @@ border-radius: 10px;
 color:white;</string>
      </property>
      <property name="text">
-      <string>수정하기</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="schedule_del_button">
-     <property name="geometry">
-      <rect>
-       <x>360</x>
-       <y>510</y>
-       <width>71</width>
-       <height>31</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">background-color:rgb(52,101,164);
-border-style: solid;
-border-radius: 10px;
-color:white;</string>
-     </property>
-     <property name="text">
       <string>삭제하기</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_13">
-     <property name="geometry">
-      <rect>
-       <x>180</x>
-       <y>15</y>
-       <width>91</width>
-       <height>31</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <family>맑은 고딕</family>
-       <pointsize>11</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string>&lt; 일정관리 &gt;</string>
      </property>
     </widget>
     <widget class="QLineEdit" name="date_detail">
@@ -1417,7 +1508,7 @@ border-radius: 10px;
        <x>20</x>
        <y>471</y>
        <width>331</width>
-       <height>201</height>
+       <height>241</height>
       </rect>
      </property>
      <property name="styleSheet">
@@ -1446,15 +1537,34 @@ color:white;</string>
       <string>조회하기</string>
      </property>
     </widget>
+    <widget class="QPushButton" name="main_button_3">
+     <property name="geometry">
+      <rect>
+       <x>300</x>
+       <y>10</y>
+       <width>121</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color:rgb(52,101,164);
+border-style: solid;
+border-radius: 10px;
+color:white;</string>
+     </property>
+     <property name="text">
+      <string>일정관리</string>
+     </property>
+    </widget>
    </widget>
    <widget class="QWidget" name="page_7">
     <widget class="QPushButton" name="attendance_button">
      <property name="geometry">
       <rect>
-       <x>70</x>
-       <y>10</y>
-       <width>75</width>
-       <height>61</height>
+       <x>170</x>
+       <y>20</y>
+       <width>101</width>
+       <height>51</height>
       </rect>
      </property>
      <property name="styleSheet">
@@ -1470,10 +1580,10 @@ color:white;</string>
     <widget class="QPushButton" name="schedule_button">
      <property name="geometry">
       <rect>
-       <x>180</x>
-       <y>10</y>
-       <width>75</width>
-       <height>61</height>
+       <x>50</x>
+       <y>20</y>
+       <width>101</width>
+       <height>51</height>
       </rect>
      </property>
      <property name="styleSheet">
@@ -1490,9 +1600,9 @@ color:white;</string>
      <property name="geometry">
       <rect>
        <x>290</x>
-       <y>10</y>
-       <width>75</width>
-       <height>61</height>
+       <y>20</y>
+       <width>101</width>
+       <height>51</height>
       </rect>
      </property>
      <property name="styleSheet">
@@ -1509,21 +1619,21 @@ color:white;</string>
      <property name="geometry">
       <rect>
        <x>20</x>
-       <y>70</y>
+       <y>80</y>
        <width>411</width>
-       <height>651</height>
+       <height>631</height>
       </rect>
      </property>
      <property name="currentIndex">
-      <number>2</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="page_8">
       <widget class="QTableWidget" name="check_widget">
        <property name="geometry">
         <rect>
-         <x>10</x>
-         <y>20</y>
-         <width>381</width>
+         <x>30</x>
+         <y>10</y>
+         <width>341</width>
          <height>541</height>
         </rect>
        </property>
@@ -1531,9 +1641,9 @@ color:white;</string>
       <widget class="QPushButton" name="manager_end_button">
        <property name="geometry">
         <rect>
-         <x>10</x>
+         <x>30</x>
          <y>570</y>
-         <width>381</width>
+         <width>341</width>
          <height>41</height>
         </rect>
        </property>
@@ -1552,9 +1662,9 @@ color:white;</string>
       <widget class="QTableWidget" name="date_widget">
        <property name="geometry">
         <rect>
-         <x>10</x>
-         <y>20</y>
-         <width>381</width>
+         <x>30</x>
+         <y>10</y>
+         <width>341</width>
          <height>541</height>
         </rect>
        </property>
@@ -1565,9 +1675,9 @@ color:white;</string>
       <widget class="QPushButton" name="manager_end_button_2">
        <property name="geometry">
         <rect>
-         <x>10</x>
+         <x>30</x>
          <y>570</y>
-         <width>381</width>
+         <width>341</width>
          <height>41</height>
         </rect>
        </property>
@@ -1586,9 +1696,9 @@ color:white;</string>
       <widget class="QTableWidget" name="message_widget">
        <property name="geometry">
         <rect>
-         <x>10</x>
-         <y>20</y>
-         <width>381</width>
+         <x>30</x>
+         <y>10</y>
+         <width>341</width>
          <height>541</height>
         </rect>
        </property>
@@ -1596,9 +1706,9 @@ color:white;</string>
       <widget class="QPushButton" name="manager_end_button_3">
        <property name="geometry">
         <rect>
-         <x>10</x>
+         <x>30</x>
          <y>570</y>
-         <width>381</width>
+         <width>341</width>
          <height>41</height>
         </rect>
        </property>
