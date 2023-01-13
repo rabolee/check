@@ -1,3 +1,4 @@
+import datetime
 import sys
 from PyQt5.QtWidgets import *
 from PyQt5 import uic
@@ -58,8 +59,8 @@ class WindowClass(QMainWindow, checkprogram) :
 
     def mainpage(self):
         self.stackedWidget.setCurrentIndex(0)
-        self.selftest()
-        # self.login_page()
+        # self.selftest()
+        self.login_page()
 
     def start(self):
         self.stackedWidget.setCurrentIndex(1)
@@ -102,9 +103,12 @@ class WindowClass(QMainWindow, checkprogram) :
 
     def check(self):
         self.stackedWidget_2.setCurrentIndex(0)
-        self.cursor.execute("select * from check_list where 퇴실시간 is null")
-        checklist = self.cursor.fetchall()
+        # self.cursor.execute("select * from check_list where 퇴실시간 is null")
+        # checklist = self.cursor.fetchall()
         # print(checklist)
+        self.cursor.execute("update check_list set 출석여부 = '결석' where (입실시간 is null) and (퇴실시간 is null)")
+        self.cursor.execute("update check_list set 출석여부 = '지각' where timediff(입실시간,'09:20')>0")
+        self.cursor.execute("update check_list set 출석여부 = '조퇴' where timediff(퇴실시간,'17:00')>0")
         self.cursor.execute("SELECT 이름,입실시간,퇴실시간,출석여부 from check_list")
         result = self.cursor.fetchall()
         self.check_widget.setRowCount(len(result))
@@ -145,15 +149,29 @@ class WindowClass(QMainWindow, checkprogram) :
         except:
             QtWidgets.QMessageBox.about(self, " ", "메세지가 없습니다")
 
-    # 메인페이지 -----------------------------------------------
+# 메인페이지 -----------------------------------------------
 
     def login_page(self):
+        try:
+            self.cursor.execute(
+                f"SELECT * from check_list where 아이디 = '{self.id_check.text()}' and 비밀번호 = '{self.pw_check.text()}'")
+            self.login = self.cursor.fetchone()
+            if not bool(self.login):
+                self.stackedWidget.setCurrentIndex(1)
+            else:
+                print('로그인성공')
+                QtWidgets.QMessageBox.about(self, "로그인성공", f"{self.login[1]}님 반갑습니다!")
+            self.name_line.setText(f"{self.login[1]}")
+        except:
+            QtWidgets.QMessageBox.about(self, " ", "로그인정보가 없습니다.")
 
-        self.cursor.execute(f"SELECT * from check_list where 아이디 = '{self.id_check.text()}' and 비밀번호 = '{self.pw_check.text()}'")
-        self.login = self.cursor.fetchone()
-        print(self.login[1])
-        QtWidgets.QMessageBox.about(self,"로그인성공",f"{self.login[1]}님 반갑습니다!")
-        self.name_line.setText(f"{self.login[1]}")
+    # def login_page(self):
+    #
+    #     self.cursor.execute(f"SELECT * from check_list where 아이디 = '{self.id_check.text()}' and 비밀번호 = '{self.pw_check.text()}'")
+    #     self.login = self.cursor.fetchone()
+    #     print(self.login[1])
+    #     QtWidgets.QMessageBox.about(self,"로그인성공",f"{self.login[1]}님 반갑습니다!")
+    #     self.name_line.setText(f"{self.login[1]}")
 
     def logout_check(self):
         self.id_check.clear()
@@ -174,9 +192,13 @@ class WindowClass(QMainWindow, checkprogram) :
         check = QMessageBox.question(self, '','입실 하겠습니까?', QMessageBox.Yes | QMessageBox.No, QMessageBox.Yes)
         if check == QMessageBox.Yes:
             QMessageBox.information(self, '','입실하였습니다')
-            watch = QTime.currentTime()
-            time = watch.toString(Qt.DefaultLocaleLongDate)
-            print(time)
+
+            # watch = QTime.currentTime()
+            # time = watch.toString(Qt.DefaultLocaleLongDate)
+            # print(time)
+
+            now = datetime.datetime.now()
+            time = now.strftime("%X")
             self.entrance_line.setText(f'{time}')
             self.cursor.execute(f"update check_list set 입실시간 = '{time}' where 이름 = '{self.login[1]}'")
             self.db.commit()
@@ -186,9 +208,8 @@ class WindowClass(QMainWindow, checkprogram) :
         check = QMessageBox.question(self, '','퇴실 하겠습니까?', QMessageBox.Yes | QMessageBox.No, QMessageBox.Yes)
         if check == QMessageBox.Yes:
             QMessageBox.information(self, '','퇴실하였습니다')
-        watch = QTime.currentTime()
-        time = watch.toString(Qt.DefaultLocaleLongDate)
-        print(time)
+        now = datetime.datetime.now()
+        time = now.strftime("%X")
         self.leave_line.setText(f'{time}')
         self.cursor.execute(f"update check_list set 퇴실시간 = '{time}' where 이름 = '{self.login[1]}'")
         self.db.commit()
@@ -199,8 +220,8 @@ class WindowClass(QMainWindow, checkprogram) :
         check = QMessageBox.question(self, ' ','외출 하겠습니까?', QMessageBox.Yes | QMessageBox.No, QMessageBox.Yes)
         if check == QMessageBox.Yes:
             QMessageBox.information(self, ' ','외출하였습니다')
-        watch = QTime.currentTime()
-        time = watch.toString(Qt.DefaultLocaleLongDate)
+        now = datetime.datetime.now()
+        time = now.strftime("%X")
         self.outing_line.setText(f'{time}')
         print(time)
 
@@ -208,8 +229,8 @@ class WindowClass(QMainWindow, checkprogram) :
         check = QMessageBox.question(self, ' ','복귀 하겠습니까?', QMessageBox.Yes | QMessageBox.No, QMessageBox.Yes)
         if check == QMessageBox.Yes:
             QMessageBox.information(self, ' ','복귀하였습니다')
-        watch = QTime.currentTime()
-        time = watch.toString(Qt.DefaultLocaleLongDate)
+        now = datetime.datetime.now()
+        time = now.strftime("%X")
         self.comeback_line.setText(f'{time}')
         print(time)
 
@@ -332,7 +353,6 @@ class WindowClass(QMainWindow, checkprogram) :
 
         if show == '훈련 과정명':
             self.tableWidget.clear()
-
             try:
                 self.cursor.execute(f"SELECT * FROM check.class_list WHERE 훈련과정명 LIKE '%{self.lineEdit_5.text()}%'")
                 result = self.cursor.fetchall()
@@ -363,18 +383,6 @@ class WindowClass(QMainWindow, checkprogram) :
         # self.listWidget.addItem(review)
         # self.lineEdit.clear()
 
-# 출결사항 -----------------------------------------------
-    def selftest(self):
-        self.cursor.execute(f"SELECT * from check_list where 아이디 = '{self.id_check.text()}' and 비밀번호 = '{self.pw_check.text()}'")
-        self.login = self.cursor.fetchone()
-        self.db.close()
-
-        if not bool(self.login):
-            QMessageBox.information(self, ' ', '로그인정보가 없습니다.')
-        else:
-            print('로그인성공')
-            QtWidgets.QMessageBox.about(self,"로그인성공",f"{self.login[1]}님 반갑습니다!")
-        self.name_line.setText(f"{self.login[1]}")
 
 
 

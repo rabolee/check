@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>456</width>
+    <width>458</width>
     <height>759</height>
    </rect>
   </property>
@@ -28,7 +28,7 @@
     </font>
    </property>
    <property name="currentIndex">
-    <number>6</number>
+    <number>0</number>
    </property>
    <widget class="QWidget" name="page_6">
     <widget class="QPushButton" name="logout_button">
@@ -90,7 +90,7 @@ color:white;</string>
     <widget class="QLabel" name="entrance_line">
      <property name="geometry">
       <rect>
-       <x>110</x>
+       <x>120</x>
        <y>460</y>
        <width>81</width>
        <height>21</height>
@@ -103,7 +103,7 @@ color:white;</string>
     <widget class="QLabel" name="leave_line">
      <property name="geometry">
       <rect>
-       <x>110</x>
+       <x>120</x>
        <y>510</y>
        <width>81</width>
        <height>21</height>
@@ -173,7 +173,7 @@ border-radius: 10px;
     <widget class="QLabel" name="outing_line">
      <property name="geometry">
       <rect>
-       <x>300</x>
+       <x>310</x>
        <y>460</y>
        <width>81</width>
        <height>21</height>
@@ -186,7 +186,7 @@ border-radius: 10px;
     <widget class="QLabel" name="comeback_line">
      <property name="geometry">
       <rect>
-       <x>300</x>
+       <x>310</x>
        <y>510</y>
        <width>81</width>
        <height>21</height>
