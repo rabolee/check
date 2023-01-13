@@ -5,6 +5,9 @@ from PyQt5 import uic
 import pymysql
 from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtCore import *
+from PyQt5.QtWidgets import *
+from PyQt5.QtGui import *
+from PyQt5.QtCore import Qt
 import keyboard
 
 checkprogram = uic.loadUiType("check.ui")[0]
@@ -79,6 +82,7 @@ class WindowClass(QMainWindow, checkprogram) :
 
     def schedule_view_student(self):
         self.stackedWidget.setCurrentIndex(5)
+        self.show_calendar()
 
     def manager_view(self):
         self.stackedWidget.setCurrentIndex(6)
@@ -285,19 +289,47 @@ class WindowClass(QMainWindow, checkprogram) :
         self.date_list.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeToContents)
 
     def calendarlist_lookup(self):
-        try:
-            self.cursor.execute(f"SELECT distinct * FROM check.message_date WHERE 이름 = '{self.login[1]}'")
-            result = self.cursor.fetchall()
-            print(result)
-            self.date_list.setRowCount(len(result))
-            self.date_list.setColumnCount(len(result[0]))
-            self.date_list.setHorizontalHeaderLabels(['날짜', '이름','일정'])
-            for i in range(len(result)):
-                for j in range(len(result[i])):
-                    self.date_list.setItem(i, j, QTableWidgetItem(str(result[i][j])))
-            self.date_list.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeToContents)
-        except:
-            QtWidgets.QMessageBox.about(self, " ",'등록된 일정이 없습니다')
+        # try:
+        self.calendar_list_view =[]
+        self.cursor.execute(f"SELECT distinct * FROM check.message_date WHERE 이름 = '{self.login[1]}'")
+        result = self.cursor.fetchall()
+        # print(result)
+        self.date_list.setRowCount(len(result))
+        self.date_list.setColumnCount(len(result[0]))
+        self.date_list.setHorizontalHeaderLabels(['날짜', '이름','일정'])
+        for i in range(len(result)):
+            for j in range(len(result[i])):
+                self.date_list.setItem(i, j, QTableWidgetItem(str(result[i][j])))
+        self.date_list.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeToContents)
+
+        self.cursor.execute(f"SELECT * FROM check.message_date WHERE 날짜")
+        result = self.cursor.fetchall()
+        # print(result[0][0])
+        for i in range(len(result)):
+            self.calendar_list_view.append(result[i][0])
+        print(self.calendar_list_view)
+        # except:
+        #     QtWidgets.QMessageBox.about(self, " ",'등록된 일정이 없습니다')
+
+    def show_calendar(self):
+        self.calendar_list_view = []
+        self.cursor.execute(f"SELECT * FROM check.message_date WHERE 날짜")
+        result = self.cursor.fetchall()
+        # print(result[0][0])
+        for i in range(len(result)):
+            self.calendar_list_view.append(result[i][0])
+        print(self.calendar_list_view)
+
+        self.calendarWidget.setVerticalHeaderFormat(0)
+
+        fm = QTextCharFormat()
+        fm.setForeground(Qt.red)
+        fm.setBackground(Qt.yellow)
+
+        for dday in self.calendar_list_view:
+            dday2 = QDate.fromString(dday,Qt.DefaultLocaleLongDate)
+            self.calendarWidget.setDateTextFormat(dday2, fm)
+
 
     def message_send(self):
         self.cursor.execute(f"insert into check.message (이름,내용) values ('{self.login[1]}','{self.message_add_student.text()}')")
