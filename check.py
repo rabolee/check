@@ -8,7 +8,6 @@ from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import Qt
-import keyboard
 
 checkprogram = uic.loadUiType("check.ui")[0]
 
@@ -49,6 +48,7 @@ class WindowClass(QMainWindow, checkprogram) :
         self.date_list.cellDoubleClicked.connect(self.cellclicked_event)
         self.tableWidget.cellClicked.connect(self.class_clicked)
         self.tableWidget.cellDoubleClicked.connect(self.class_clicked)
+
         self.message_st_button.clicked.connect(self.message_view_student)
         self.message_send_button.clicked.connect(self.message_send)
         self.lookup_message.clicked.connect(self.message_view)
@@ -56,6 +56,9 @@ class WindowClass(QMainWindow, checkprogram) :
         self.find_button.clicked.connect(self.find_course_review)
         self.classview_button.clicked.connect(self.change_class_review)
         self.review_add_button.clicked.connect(self.review_add)
+        self.Professor_date_add.clicked.connect(self.Professor_add)
+        self.calendarWidget_2.clicked.connect(self.calendarlist_teacher)
+
 
 
 # 화면전환용 ----------------------------------------------
@@ -107,9 +110,6 @@ class WindowClass(QMainWindow, checkprogram) :
 
     def check(self):
         self.stackedWidget_2.setCurrentIndex(0)
-        # self.cursor.execute("select * from check_list where 퇴실시간 is null")
-        # checklist = self.cursor.fetchall()
-        # print(checklist)
         self.cursor.execute("update check_list set 출석여부 = '결석' where (입실시간 is null) and (퇴실시간 is null)")
         self.cursor.execute("update check_list set 출석여부 = '지각' where timediff(입실시간,'09:20')>0")
         self.cursor.execute("update check_list set 출석여부 = '조퇴' where timediff(퇴실시간,'17:00')>0")
@@ -135,6 +135,11 @@ class WindowClass(QMainWindow, checkprogram) :
                 for j in range(len(result[i])):
                     self.date_widget.setItem(i, j, QTableWidgetItem(str(result[i][j])))
             self.date_widget.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeToContents)
+
+            now = self.calendarWidget_2.selectedDate()
+            self.data_lineEdit.setText(f"{now.toString(Qt.DefaultLocaleLongDate)}")
+            print(now)
+
         except:
             QtWidgets.QMessageBox.about(self, " ","등록된 일정이 없습니다")
 
@@ -153,6 +158,35 @@ class WindowClass(QMainWindow, checkprogram) :
         except:
             QtWidgets.QMessageBox.about(self, " ", "메세지가 없습니다")
 
+    def Professor_add(self):
+        now = self.calendarWidget_2.selectedDate()
+        self.data_lineEdit.setText(f"{now.toString(Qt.DefaultLocaleLongDate)}")
+        self.data_lineEdit.clear()
+        print(self.data_lineEdit.text())
+        a = ['이상복','류홍걸','조동현']
+        show = self.Professor_name.currentText()
+        for i in range(len(a)):
+            if show == a[i]:
+                self.cursor.execute(f"insert into check.message_date (날짜,이름,메세지) values ('{now.toString(Qt.DefaultLocaleLongDate)}','{show}','{self.Professor_date.text()}')")
+                self.db.commit()
+                self.Professor_date.clear()
+                self.stackedWidget_2.setCurrentIndex(1)
+                self.cursor.execute("SELECT distinct * FROM check.message_date")
+                result = self.cursor.fetchall()
+                self.date_widget.setRowCount(len(result))
+                self.date_widget.setColumnCount(len(result[0]))
+                self.date_widget.setHorizontalHeaderLabels(['날짜', '이름', '일정'])
+                for i in range(len(result)):
+                    for j in range(len(result[i])):
+                        self.date_widget.setItem(i, j, QTableWidgetItem(str(result[i][j])))
+                self.date_widget.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeToContents)
+
+                now = self.calendarWidget_2.selectedDate()
+                self.data_lineEdit.setText(f"{now.toString(Qt.DefaultLocaleLongDate)}")
+                print(now)
+            else:
+                continue
+
 # 메인페이지 -----------------------------------------------
 
     def login_page(self):
@@ -164,18 +198,10 @@ class WindowClass(QMainWindow, checkprogram) :
                 self.stackedWidget.setCurrentIndex(1)
             else:
                 print('로그인성공')
-                QtWidgets.QMessageBox.about(self, "로그인성공", f"{self.login[1]}님 반갑습니다!")
+                # QtWidgets.QMessageBox.about(self, "로그인성공", f"{self.login[1]}님 반갑습니다!")
             self.name_line.setText(f"{self.login[1]}")
         except:
             QtWidgets.QMessageBox.about(self, " ", "로그인정보가 없습니다.")
-
-    # def login_page(self):
-    #
-    #     self.cursor.execute(f"SELECT * from check_list where 아이디 = '{self.id_check.text()}' and 비밀번호 = '{self.pw_check.text()}'")
-    #     self.login = self.cursor.fetchone()
-    #     print(self.login[1])
-    #     QtWidgets.QMessageBox.about(self,"로그인성공",f"{self.login[1]}님 반갑습니다!")
-    #     self.name_line.setText(f"{self.login[1]}")
 
     def logout_check(self):
         self.id_check.clear()
@@ -196,10 +222,6 @@ class WindowClass(QMainWindow, checkprogram) :
         check = QMessageBox.question(self, '','입실 하겠습니까?', QMessageBox.Yes | QMessageBox.No, QMessageBox.Yes)
         if check == QMessageBox.Yes:
             QMessageBox.information(self, '','입실하였습니다')
-
-            # watch = QTime.currentTime()
-            # time = watch.toString(Qt.DefaultLocaleLongDate)
-            # print(time)
 
             now = datetime.datetime.now()
             time = now.strftime("%X")
@@ -273,7 +295,6 @@ class WindowClass(QMainWindow, checkprogram) :
         self.date_list.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeToContents)
         self.date_detail.clear()
 
-
     def calendarlist_del(self):
 
         self.cursor.execute(f"delete from check.message_date where 메세지 = '{self.cellchoice}'")
@@ -289,27 +310,27 @@ class WindowClass(QMainWindow, checkprogram) :
         self.date_list.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeToContents)
 
     def calendarlist_lookup(self):
-        # try:
-        self.calendar_list_view =[]
-        self.cursor.execute(f"SELECT distinct * FROM check.message_date WHERE 이름 = '{self.login[1]}'")
-        result = self.cursor.fetchall()
-        # print(result)
-        self.date_list.setRowCount(len(result))
-        self.date_list.setColumnCount(len(result[0]))
-        self.date_list.setHorizontalHeaderLabels(['날짜', '이름','일정'])
-        for i in range(len(result)):
-            for j in range(len(result[i])):
-                self.date_list.setItem(i, j, QTableWidgetItem(str(result[i][j])))
-        self.date_list.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeToContents)
+        try:
+            self.calendar_list_view =[]
+            self.cursor.execute(f"SELECT distinct * FROM check.message_date WHERE 이름 = '{self.login[1]}'")
+            result = self.cursor.fetchall()
+            # print(result)
+            self.date_list.setRowCount(len(result))
+            self.date_list.setColumnCount(len(result[0]))
+            self.date_list.setHorizontalHeaderLabels(['날짜', '이름','일정'])
+            for i in range(len(result)):
+                for j in range(len(result[i])):
+                    self.date_list.setItem(i, j, QTableWidgetItem(str(result[i][j])))
+            self.date_list.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeToContents)
 
-        self.cursor.execute(f"SELECT * FROM check.message_date WHERE 날짜")
-        result = self.cursor.fetchall()
-        # print(result[0][0])
-        for i in range(len(result)):
-            self.calendar_list_view.append(result[i][0])
-        print(self.calendar_list_view)
-        # except:
-        #     QtWidgets.QMessageBox.about(self, " ",'등록된 일정이 없습니다')
+            self.cursor.execute(f"SELECT * FROM check.message_date WHERE 날짜")
+            result = self.cursor.fetchall()
+            # print(result[0][0])
+            for i in range(len(result)):
+                self.calendar_list_view.append(result[i][0])
+            print(self.calendar_list_view)
+        except:
+            QtWidgets.QMessageBox.about(self, " ",'등록된 일정이 없습니다')
 
     def show_calendar(self):
         self.calendar_list_view = []
@@ -330,7 +351,6 @@ class WindowClass(QMainWindow, checkprogram) :
             dday2 = QDate.fromString(dday,Qt.DefaultLocaleLongDate)
             self.calendarWidget.setDateTextFormat(dday2, fm)
 
-
     def message_send(self):
         self.cursor.execute(f"insert into check.message (이름,내용) values ('{self.login[1]}','{self.message_add_student.text()}')")
         self.db.commit()
@@ -346,7 +366,6 @@ class WindowClass(QMainWindow, checkprogram) :
             for j in range(len(result[i])):
                 self.tableWidget_message.setItem(i, j, QTableWidgetItem(str(result[i][j])))
         self.tableWidget_message.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeToContents)
-
 
 # 수강평 -----------------------------------------------
     def find_course_review(self):
@@ -382,7 +401,6 @@ class WindowClass(QMainWindow, checkprogram) :
                 self.stackedWidget_5.setCurrentIndex(0)
                 QtWidgets.QMessageBox.about(self, " ","검색결과가 없습니다")
 
-
         if show == '훈련 과정명':
             self.tableWidget.clear()
             try:
@@ -409,14 +427,6 @@ class WindowClass(QMainWindow, checkprogram) :
         self.db.commit()
         self.listWidget.addItem(review)
         self.lineEdit.clear()
-
-        # review = self.lineEdit.text()
-        # print(review)
-        # self.listWidget.addItem(review)
-        # self.lineEdit.clear()
-
-
-
 
 if __name__ == "__main__" :
 
